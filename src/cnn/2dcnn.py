@@ -36,7 +36,7 @@ Y_train = Y_train.reshape(n_train,n_ch, n_y, n_x)
 X_test = X_test.reshape(n_test, n_ch, n_y, n_x)
 Y_test = Y_test.reshape(n_test, n_ch, n_y, n_x)
 
-## To preserve the shape as the real mesh
+## To preserve the shape of the real mesh
 X_train = np.transpose(X_train, (0, 1, 3, 2))
 Y_train = np.transpose(Y_train, (0, 1, 3, 2))
 X_test = np.transpose(X_test, (0, 1, 3, 2))
@@ -58,7 +58,7 @@ training = False
 
 if training == False:
     # Load the optimised parameters as used in the paper
-    UNET.load_weights(srcpath+"/frontiers_data/trained_weights/2dcnn.h5")
+    UNET.load_weights(srcpath+"/saved_models/2dcnn.h5")
 
 else:
     # learning rate scheduler used in the paper
@@ -73,7 +73,7 @@ else:
         return lr
 
     # Callbacks for lr_scheduler and saving weights
-    checkpoint = [LearningRateScheduler(lr_scheduler, verbose=1), ModelCheckpoint(srcpath+"/frontiers_data/trained_weights/2dcnnnew.h5", monitor='loss', verbose=1,
+    checkpoint = [LearningRateScheduler(lr_scheduler, verbose=1), ModelCheckpoint(srcpath+"/saved_models/2dcnnnew.h5", monitor='loss', verbose=1,
     save_best_only=True,save_weights_only=True, mode='min', period=1)]
 
     # Start the training procedure
