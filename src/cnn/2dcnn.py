@@ -58,10 +58,10 @@ training = False
 
 if training == False:
     # Load the optimised parameters as used in the paper
-    UNET.load_weights(srcpath+"/saved_models/2dcnn.h5")
+    UNET.load_weights(srcpath+"/frontiers_data/saved_models/2dcnn.h5")
 
 else:
-    # learning rate scheduler used in the paper
+    # learning rate scheduler implemented in the paper
     def lr_scheduler(epoch, lr):
 
         if epoch <= 10:
@@ -73,7 +73,7 @@ else:
         return lr
 
     # Callbacks for lr_scheduler and saving weights
-    checkpoint = [LearningRateScheduler(lr_scheduler, verbose=1), ModelCheckpoint(srcpath+"/saved_models/2dcnnnew.h5", monitor='loss', verbose=1,
+    checkpoint = [LearningRateScheduler(lr_scheduler, verbose=1), ModelCheckpoint(srcpath+"/frontiers_data/saved_models/2dcnnnew.h5", monitor='loss', verbose=1,
     save_best_only=True,save_weights_only=True, mode='min', period=1)]
 
     # Start the training procedure
