@@ -25,12 +25,12 @@ import DatasetHandler
 
 class SCCPerceiver(object):
 
-    def __init__(self):
+    def __init__(self,in_size):
         self.config = PerceiverConfig()
 
         self.config.d_latents=210
-        self.config.d_model=5835
-        # self.config.d_model=198
+        # self.config.d_model=5835
+        self.config.d_model=in_size
         self.config.max_position_embeddings=1024
         self.config.num_latents=128
         # self.config.num_blocks=1
@@ -47,7 +47,7 @@ class SCCPerceiver(object):
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         print("Device: "+ str(self.device))
-        self.batch_sz=32
+        self.batch_sz=1
 
         self.preprocessor = None
         self.postprocessor = None
@@ -67,7 +67,7 @@ class SCCPerceiver(object):
         self.optimizer = AdamW(self.model.parameters(), lr=100e-6)
         self.minloss = 100000
 
-        self.name="elephant_bz4"
+        self.name="perceiver"
         self.state_handler=Utils.model_state_handler(self.name)
         self.it = self.state_handler.it
 
@@ -158,7 +158,7 @@ class SCCPerceiver(object):
         self.model.train()
         return T_loss/n_steps
 
-    def SaveTestInference(self,custom=False):
+    def SaveTestInference(self,save_path,custom=False):
         self.model.eval()
         inference = []
         with torch.no_grad():
@@ -196,7 +196,7 @@ class SCCPerceiver(object):
         print(len(inference))
         inference = np.array(inference)
         print(inference.shape)
-        np.save("Test_inference.npy",inference)
+        np.save(save_path,inference)
         self.model.train()
         return T_loss/n_steps
 
@@ -237,13 +237,13 @@ class SCCPerceiver(object):
         self.model.train()
         return T_loss/n_steps
 
-    def LoadDataset(self,name,trainable=True):
+    def LoadDataset(self,path,name,trainable=True):
 
         if trainable == True:
-            a = DatasetHandler.MeshDataset("train",name+"_train")
+            a = DatasetHandler.MeshDataset("train",path,"train_"+name+".npy")
             self.TrainDataset = DataLoader(a, batch_size=self.batch_sz, shuffle=True,drop_last=True)
 
-            b = DatasetHandler.MeshDataset("test",name+"_test")
+            b = DatasetHandler.MeshDataset("test",path,"test_"+name+".npy")
             self.TestDataset = DataLoader(b, batch_size=self.batch_sz, shuffle=False,drop_last=False)
         else:
             a = DatasetHandler.MeshDataset("custom",name)
@@ -327,10 +327,12 @@ class SCCPerceiver(object):
     def Load(self,name):
         if name.startswith("SavedModels/"):
             name = name[12:]
-        print("Loading model..")
-        self.minloss=float(name[-14:])
-        print(self.minloss)
-        self.model.load_state_dict(torch.load("SavedModels/"+name+".pt"))
+            print("Loading model..")
+            self.minloss=float(name[-14:])
+            print(self.minloss)
+            self.model.load_state_dict(torch.load("SavedModels/"+name+".pt"))
+        else:
+            self.model.load_state_dict(torch.load(name))
 
     def _setPreproccesor(self):
 

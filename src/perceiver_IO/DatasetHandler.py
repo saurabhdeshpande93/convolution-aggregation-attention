@@ -49,25 +49,25 @@ class PPDataset(Dataset):
 
 class MeshDataset(Dataset):
 
-    def __init__(self,name,data_path):
+    def __init__(self,name,data_path,file):
         self.data_path = data_path
         self.name = name
-        data_exist = exists(data_path+"_features.npy")
+        data_exist = exists(data_path+"features_"+file)
 
         if not data_exist:
             print("Default preprocessed features data does not exist..")
             sys.exit()
 
-        data_exist = exists(data_path+"_labels.npy")
+        data_exist = exists(data_path+"labels_"+file)
 
         if not data_exist:
             print("Default preprocessed labels data does not exist..")
             sys.exit()
 
         print("Loading features dataset..")
-        self.data_features= torch.from_numpy(np.load(self.data_path+"_features.npy"))
+        self.data_features= torch.from_numpy(np.load(self.data_path+"features_"+file))
         print("Loading labels dataset..")
-        self.data_labels= torch.from_numpy(np.load(self.data_path+"_labels.npy"))
+        self.data_labels= torch.from_numpy(np.load(self.data_path+"labels_"+file))
 
         print("Finished loading dataset")
 
