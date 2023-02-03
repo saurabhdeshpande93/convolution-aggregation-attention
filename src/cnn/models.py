@@ -8,7 +8,7 @@ from keras.layers import Input, concatenate, Lambda, ReLU, MaxPooling2D, Conv2D,
 class Models():
 
   def __init__(self):
-    super().__init__()
+      pass
 
   def CNN(self,input_shape):
       inputs = Input(shape=input_shape)
