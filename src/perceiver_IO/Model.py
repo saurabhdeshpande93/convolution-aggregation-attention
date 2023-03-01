@@ -29,20 +29,13 @@ class SCCPerceiver(object):
         self.config = PerceiverConfig()
 
         self.config.d_latents=210
-        # self.config.d_model=5835
         self.config.d_model=in_size
         self.config.max_position_embeddings=1024
         self.config.num_latents=128
-        # self.config.num_blocks=1
         self.config.num_blocks=3
-        #self.config.num_self_attention_heads=1
         self.config.num_self_attention_heads=2
-
-        # self.config.num_cross_attention_heads=1
         self.config.num_cross_attention_heads=2
-        # self.config.num_self_attends_per_block=1
         self.config.num_self_attends_per_block=2
-
         self.config.attention_probs_dropout_prob=0
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -74,7 +67,7 @@ class SCCPerceiver(object):
     def __call__(self, sample):
         print("test")
 
-    def Train(self,epochs, eval_interval): #C320 (200K) need to beat: 5.68e-05 4 mapping, (5.37e-05 train, 5.53e-05 test). 3.501 obtained \\\#C320 (400K) need to beat: 8.69e-05 4 mapping, ( train, 13.24e-05 test). 6.662 obtained
+    def Train(self,epochs, eval_interval):
         n_steps_total=0
         self.model.train()
         for epoch in range(epochs):
@@ -82,10 +75,9 @@ class SCCPerceiver(object):
             n_steps=0
             eval_loss = 0
             train_loss = 0
-            for batch_idx, sample in enumerate(self.TrainDataset):  
-                
+            for batch_idx, sample in enumerate(self.TrainDataset):
+
                 inputs = sample["features"].to(self.device)
-                # inputs = inputs.unsqueeze(1)###############################################################################
                 labels = sample["labels"].to(self.device)
 
 
@@ -129,7 +121,7 @@ class SCCPerceiver(object):
             T_loss=0
             n_steps=0
             if custom==False:
-                for batch_idx, sample in enumerate(self.TestDataset):   
+                for batch_idx, sample in enumerate(self.TestDataset):
                     n_steps = n_steps + 1
                     inputs = sample["features"].to(self.device)
 
@@ -141,7 +133,7 @@ class SCCPerceiver(object):
                     loss = self.criterionL1(logits, labels)
                     T_loss = T_loss + loss.item()
             else:
-                for batch_idx, sample in enumerate(self.CustomDataset):   
+                for batch_idx, sample in enumerate(self.CustomDataset):
                     n_steps = n_steps + 1
                     inputs = sample["features"].to(self.device)
 
@@ -165,7 +157,7 @@ class SCCPerceiver(object):
             T_loss=0
             n_steps=0
             if custom==False:
-                for batch_idx, sample in enumerate(self.TestDataset):   
+                for batch_idx, sample in enumerate(self.TestDataset):
                     n_steps = n_steps + 1
                     inputs = sample["features"].to(self.device)
 
@@ -174,13 +166,13 @@ class SCCPerceiver(object):
                     outputs = self.model(inputs=inputs.to(self.device))
                     logits = outputs.logits.squeeze()
 
-                    
+
 
                     loss = self.criterionL1(logits, labels)
                     inference.append(logits.to("cpu").numpy())
                     T_loss = T_loss + loss.item()
             else:
-                for batch_idx, sample in enumerate(self.CustomDataset):   
+                for batch_idx, sample in enumerate(self.CustomDataset):
                     n_steps = n_steps + 1
                     inputs = sample["features"].to(self.device)
 
@@ -206,7 +198,7 @@ class SCCPerceiver(object):
             T_loss=0
             n_steps=0
             if custom==False:
-                for batch_idx, sample in enumerate(self.TestDataset):   
+                for batch_idx, sample in enumerate(self.TestDataset):
                     n_steps = n_steps + 1
                     inputs = sample["features"].to(self.device)
 
@@ -215,12 +207,12 @@ class SCCPerceiver(object):
                     outputs = self.model(inputs=inputs.to(self.device))
                     logits = outputs.logits.squeeze()
 
-                    
+
 
                     loss = self.criterionL1(logits, labels)
                     T_loss = T_loss + loss.item()
             else:
-                for batch_idx, sample in enumerate(self.CustomDataset):   
+                for batch_idx, sample in enumerate(self.CustomDataset):
                     n_steps = n_steps + 1
                     inputs = sample["features"].to(self.device)
 
@@ -254,8 +246,8 @@ class SCCPerceiver(object):
         total_loss=0
 
         if name==None:
-            for batch_idx_j, sample_j in enumerate(self.CustomDataset): 
-                labels = sample_j["charges"].to(self.device) 
+            for batch_idx_j, sample_j in enumerate(self.CustomDataset):
+                labels = sample_j["charges"].to(self.device)
                 if len(labels) > 1:
                     n_step=n_step+1
                     print(sample_j["path"][0], sample_j["path"][1])
@@ -263,16 +255,16 @@ class SCCPerceiver(object):
                     print(f"Loss short mapping: {self.criterion(labels[0], labels[1]).item()}")
                     print(f"Average loss short mapping: {total_loss/n_step}")
         if name=="Train":
-            for batch_idx_j, sample_j in enumerate(self.TrainDataset):   
-                labels = sample_j["charges"].to(self.device) 
+            for batch_idx_j, sample_j in enumerate(self.TrainDataset):
+                labels = sample_j["charges"].to(self.device)
                 if len(labels) > 1:
                     n_step=n_step+1
                     total_loss = total_loss + self.criterion(labels[0], labels[1]).item()
                     print(f"Loss short mapping: {self.criterion(labels[0], labels[1]).item()}")
                     print(f"Average loss short mapping: {total_loss/n_step}")
         if name=="Test":
-            for batch_idx_j, sample_j in enumerate(self.TestDataset):   
-                labels = sample_j["charges"].to(self.device) 
+            for batch_idx_j, sample_j in enumerate(self.TestDataset):
+                labels = sample_j["charges"].to(self.device)
                 if len(labels) > 1:
                     n_step=n_step+1
                     total_loss = total_loss + self.criterion(labels[0], labels[1]).item()
@@ -284,7 +276,7 @@ class SCCPerceiver(object):
 
 
         if name==None:
-            for batch_idx_j, sample_j in enumerate(self.CustomDataset):   
+            for batch_idx_j, sample_j in enumerate(self.CustomDataset):
                 n_step=n_step+1
                 avg_charge=sample_j["charges_mask"].to(self.device)
                 avg_charge=avg_charge*0
@@ -304,7 +296,7 @@ class SCCPerceiver(object):
                 print(f"Loss 4 mapping: {self.criterion(avg_charge, labels).item()}")
                 print(f"Average loss 4 mapping: {total_loss/n_step}")
         if name=="Test":
-            for batch_idx_j, sample_j in enumerate(self.TestDataset):   
+            for batch_idx_j, sample_j in enumerate(self.TestDataset):
                 n_step=n_step+1
                 avg_charge=sample_j["charges_mask"].to(self.device)
                 avg_charge=avg_charge*0
@@ -350,15 +342,6 @@ class SCCPerceiver(object):
         print("image size "+str(self.config.image_size))
 
     def _setDecoder(self):
-
-        # self.decoder = PerceiverBasicDecoder(
-        # self.config,
-        # num_channels=self.config.d_latents,
-        # trainable_position_encoding_kwargs=dict(num_channels=self.config.d_latents, index_dims=1),
-        # use_query_residual=True,
-        # final_project=True,
-        # output_num_channels=1024,
-        # num_heads=1,)
 
         self.decoder = PerceiverBasicDecoder(
         self.config,
