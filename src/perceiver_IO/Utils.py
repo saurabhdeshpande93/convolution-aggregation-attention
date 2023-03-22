@@ -15,7 +15,7 @@ class raw_db():
 
         for (root,dirs,files) in os.walk(root_dir):
             for files in files:
-                if files.endswith(".gen"):  
+                if files.endswith(".gen"):
                     name = root+'/'+files
                     name = name[:-3]
                     self.gen_paths.append(name+"gen")
@@ -68,7 +68,7 @@ def torchsave(name,raw_dataset):
     print("Saving train dataset "+name+"..")
     torch.save([gen,charges,path,ordering], name+'_train.torch')
     print("Dataset "+name+"_train.torch saved..")
-    
+
 def writecharges(charges,mask,ordering,name=None):
 
     Nat = int(mask.cpu().sum())
@@ -106,14 +106,14 @@ class model_state_handler():
         print("Loading from checkpoint "+ self.name)
         for (root,dirs,files) in os.walk(root_dir):
             for files in files:
-                if files.startswith(self.name) & files.endswith(".pt"):  
+                if files.startswith(self.name) & files.endswith(".pt"):
                     name = root+'/'+files
                     name = name[:-3]
                     self.states.append(name)
 
         if len(self.states) == 1:
             with open(self.root_dir+'/'+self.name+".txt", 'rb') as f:
-                try:  # catch OSError in case of a one line file 
+                try:  # catch OSError in case of a one line file
                     f.seek(-2, os.SEEK_END)
                     while f.read(1) != b'\n':
                         f.seek(-2, os.SEEK_CUR)
@@ -122,7 +122,7 @@ class model_state_handler():
                 last_line = f.readline().decode()
             last_line = last_line.split()
             self.it = int(last_line[0])
-            
+
         if len(self.states) == 0:
             print("No states found with name "+ self.name)
             self.states.append(self.root_dir+'/'+self.name+"_"+self.current_loss_str)
