@@ -5,9 +5,10 @@ This repository provides the implementations of "Convolution, aggregation and at
 Datasets used in the paper are available on [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7585319.svg)](https://doi.org/10.5281/zenodo.7585319).
 
 
+
 ## Dependencies
 
-The script has been tested running under Python 3.10.9, with the following packages installed (along with their dependencies):
+The script has been tested running under Python 3.10.9, with the following packages installed (along with their dependencies). In addition, CUDA 10.1 and cuDNN 7 have been used.
 
 
 - `tensorflow-gpu==2.4.1`
@@ -21,7 +22,8 @@ The script has been tested running under Python 3.10.9, with the following packa
 - `scikit-learn==1.0.1`
 - `matplotlib==3.5.0`
 
-In addition, CUDA 10.1 and cuDNN 7 have been used.
+All the finite element simulations are performed using the [AceFEM](http://symech.fgg.uni-lj.si/Download.htm) library.
+
 
 
 ## Cite
