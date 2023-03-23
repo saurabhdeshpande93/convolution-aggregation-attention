@@ -17,6 +17,8 @@ tf.random.set_seed(50)
 srcpath = os.path.dirname(os.getcwd())
 datapath = srcpath + "/frontiers_data/FEMData/"
 
+print("Loading dataset for the 2D CNN case ....")
+
 X_train = np.load(datapath+'features_train_2D.npy')
 Y_train = np.load(datapath+'labels_train_2D.npy')
 
@@ -59,6 +61,7 @@ training = False
 if training == False:
     # Load the optimised parameters as used in the paper
     UNET.load_weights(srcpath+"/frontiers_data/saved_models/2dcnn.h5")
+    print("Pretrained weights are assigned ....")
 
 else:
     # learning rate scheduler implemented in the paper
@@ -89,4 +92,8 @@ else:
 predicts = UNET.predict(X_test)
 predicts = np.transpose(predicts, (0, 1, 3, 2))
 predicts= predicts.reshape((n_test,dof))
-np.save(srcpath+"/frontiers_data/predictions/2dcnn_predicts.npy",predicts)
+
+prediction_path = srcpath + '/frontiers_data/predictions/'
+np.save(prediction_path + '2dcnn_predicts.npy', predicts)
+
+print("Predictions are stored in : {}".format(prediction_path))
