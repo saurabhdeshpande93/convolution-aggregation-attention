@@ -45,15 +45,15 @@ All the finite element simulations are performed using the [AceFEM](http://symec
 Consider citing our paper if you use this code in your own work:
 
 ```
-@misc{DESHPANDE221201386,
-  doi = {10.48550/ARXIV.2212.01386},
-  url = {https://arxiv.org/abs/2212.01386},
-  author = {Deshpande, Saurabh and Sosa, Raúl I. and Bordas, Stéphane P. A. and Lengiewicz, Jakub},
-  keywords = {Machine Learning (cs.LG), Computational Engineering, Finance, and Science (cs.CE), FOS: Computer and information sciences, FOS: Computer and information sciences},
-  title = {Convolution, aggregation and attention based deep neural networks for accelerating simulations in mechanics},
-  publisher = {arXiv},
-  year = {2022},
-  copyright = {Creative Commons Attribution 4.0 International}
+@article{Deshpande2023,
+  doi = {10.3389/fmats.2023.1128954},
+  url = {https://doi.org/10.3389/fmats.2023.1128954},
+  year = {2023},
+  publisher = {Frontiers Media {SA}},
+  volume = {10},
+  author = {Saurabh Deshpande and Ra{\'{u}}l I. Sosa and St{\'{e}}phane P. A. Bordas and Jakub Lengiewicz},
+  title = {Convolution,  aggregation and attention based deep neural networks for accelerating simulations in mechanics},
+  journal = {Frontiers in Materials}
 }
 ```
 
