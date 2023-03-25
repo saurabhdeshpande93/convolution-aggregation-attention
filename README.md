@@ -4,8 +4,11 @@ This repository provides the implementations of "Convolution, aggregation and at
 
 Proposed DNNs are trained on numerically generated non-linear FEM datasets (scripts are provided in the [<span style="color:blue">fem</span>](src/fem) directory. Datasets used in the paper are available on [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7585319.svg)](https://doi.org/10.5281/zenodo.7585319).
 
-![schematic](schematic.jpg){:class="img-responsive"}{:width="90%"}
+<br />
 
+![schematic](schematic.jpg)
+
+<br />
 
 ## Instructions
 
@@ -13,8 +16,9 @@ Proposed DNNs are trained on numerically generated non-linear FEM datasets (scri
 
 2. Neural network models can be used for inference using the pre-trained weights or can be trained from scratch by running `main.py` scripts in respective directories.
 
-3. Use `postproess.py` to save the example of interest to further visualise it in Acegen using Mathematica notebooks present in the [<span style="color:blue">visualisation</span>](src/postprocess/visualisation) directory.
+3. Use `postprcoess.py` to save the example of interest to further visualise it in Acegen using Mathematica notebooks present in the [<span style="color:blue">visualisation</span>](src/postprocess/visualisation) directory.
 
+<br />
 
 ## Dependencies
 
@@ -34,7 +38,7 @@ Scripts have been tested running under Python 3.10.9, with the following package
 
 All the finite element simulations are performed using the [AceFEM](http://symech.fgg.uni-lj.si/Download.htm) library.
 
-
+<br />
 
 ## Cite
 
@@ -53,6 +57,7 @@ Consider citing our paper if you use this code in your own work:
 }
 ```
 
+<br />
 
 ## References
 
