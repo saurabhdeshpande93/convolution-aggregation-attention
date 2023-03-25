@@ -75,5 +75,5 @@ class Models():
       return UNET
 
 
-  def MAgNET(self): #To be added
-      pass
+  def MAgNET(self):
+      pass #To be added after the acceptance of MAgNET paper.

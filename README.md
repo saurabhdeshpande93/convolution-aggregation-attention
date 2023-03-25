@@ -1,14 +1,24 @@
 ## Convolution, aggregation and attention based deep neural networks  
 
-This repository provides the implementations of "Convolution, aggregation and attention based deep neural networks for accelerating simulations in mechanics". In this work, we propose different types of deep learning surrogate models for non-linear FEM simulations.
+This repository provides the implementations of "Convolution, aggregation and attention based deep neural networks (DNNs) for accelerating simulations in mechanics". In this work, we propose different types of deep learning surrogate models for non-linear FEM simulations. For given input forces, DNNs predict deformed meshes as shown in the schematic below.
 
-Datasets used in the paper are available on [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7585319.svg)](https://doi.org/10.5281/zenodo.7585319).
+Proposed DNNs are trained on numerically generated non-linear FEM datasets (scripts are provided in the [<span style="color:blue">fem</span>](src/fem) directory. Datasets used in the paper are available on [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7585319.svg)](https://doi.org/10.5281/zenodo.7585319).
 
+![schematic](schematic.jpg){:class="img-responsive"}{:width="90%"}
+
+
+## Instructions
+
+1. Download the supplementary data from zenodo and keep it in the src directory.
+
+2. Neural network models can be used for inference using the pre-trained weights or can be trained from scratch by running `main.py` scripts in respective directories.
+
+3. Use `postproess.py` to save the example of interest to further visualise it in Acegen using Mathematica notebooks present in the [<span style="color:blue">visualisation</span>](src/postprocess/visualisation) directory.
 
 
 ## Dependencies
 
-The script has been tested running under Python 3.10.9, with the following packages installed (along with their dependencies). In addition, CUDA 10.1 and cuDNN 7 have been used.
+Scripts have been tested running under Python 3.10.9, with the following packages installed (along with their dependencies). In addition, CUDA 10.1 and cuDNN 7 have been used.
 
 
 - `tensorflow-gpu==2.4.1`
@@ -42,3 +52,10 @@ Consider citing our paper if you use this code in your own work:
   copyright = {Creative Commons Attribution 4.0 International}
 }
 ```
+
+
+## References
+
+- Saurabh Deshpande, Jakub Lengiewicz and Stéphane P.A. Bordas. **MAgNET: A Graph U-Net Architecture for Mesh-Based Simulations**. *arXiv 2022*. https://arxiv.org/abs/2211.00713
+
+- Saurabh Deshpande, Jakub Lengiewicz and Stéphane P.A. Bordas. **Probabilistic Deep Learning for Real-Time Large Deformation Simulations**. *Computer Methods in Applied Mechanics and Engineering (CMAME) 2022*. https://doi.org/10.1016/j.cma.2022.115307
